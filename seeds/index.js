@@ -4,6 +4,7 @@ const seedComments = require("./comment-seeds");
 
 const sequelize = require("../config/config");
 
+//synch database and seed users, posts and comments
 const seedAll = async () => {
   await sequelize.sync({ force: true });
   console.log("------DATABASE SYNCED-----");

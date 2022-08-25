@@ -6,12 +6,29 @@ router.get('/', async (req, res) => {
   try {
     // we need to get all Posts and include the User for each (change lines 8 and 9)
     const postData = await SomeModel.someSequelizeMethod({
-      include: [SomeOtherModel],
+      include: [{
+        model: Comment,
+        attributes: [
+          "id",
+          "comment_text",
+          "post_id",
+          "user_id",
+          "created_at",
+        ],
+        include: {
+          model: User,
+          attributes: ["username"],
+        },
+      },
+      {
+        model: User,
+        attributes:["username"],
+      }],
     });
     // serialize the data
     const posts = postData.map((post) => post.get({ plain: true }));
     // we should render all the posts here
-    res.render('hmmmm what view should we render?', { posts });
+    res.render('all-posts', { posts, loggedIn: require.session.loggedIn });
   } catch (err) {
     res.status(500).json(err);
   }
