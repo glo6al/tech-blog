@@ -1,8 +1,8 @@
-const router = require('express').Router();
-const { Post } = require('../../models/');
-const withAuth = require('../../utils/auth');
+const router = require("express").Router();
+const { Post } = require("../../models/");
+const withAuth = require("../../utils/auth");
 
-router.post('/', withAuth, async (req, res) => {
+router.post("/", withAuth, async (req, res) => {
   const body = req.body;
 
   try {
@@ -13,7 +13,7 @@ router.post('/', withAuth, async (req, res) => {
   }
 });
 
-router.put('/:id', withAuth, async (req, res) => {
+router.put("/:id", withAuth, async (req, res) => {
   try {
     const [affectedRows] = await Post.update(req.body, {
       where: {
@@ -31,7 +31,7 @@ router.put('/:id', withAuth, async (req, res) => {
   }
 });
 
-router.delete('/:id', withAuth, async (req, res) => {
+router.delete("/:id", withAuth, async (req, res) => {
   try {
     const [affectedRows] = Post.destroy({
       where: {
@@ -50,3 +50,29 @@ router.delete('/:id', withAuth, async (req, res) => {
 });
 
 module.exports = router;
+
+router.get("/", (req, res) => {
+  Post.findAll({
+    attributes: ["id", "title", "text", "created_at"],
+    order: [["created_at", "DESC"]],
+    include: [
+      {
+        model: Comment,
+        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+        include: {
+          model: User,
+          attributes: ["username"],
+        },
+      },
+      {
+        model: User,
+        attributes: ["username"],
+      },
+    ],
+  })
+    .then((dbPostData) => res.json(dbPostData))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
