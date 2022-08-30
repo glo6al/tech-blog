@@ -21,7 +21,7 @@ router.get("/", withAuth, async (req, res) => {
     const posts = postData.map((post) => post.get({ plain: true }));
 
     // fill in the view to be rendered
-    res.render("all-posts-dashboard", {
+    res.render("all-posts", {
       // this is how we specify a different layout other than main! no change needed
       layout: "dashboard",
       // coming from line 10 above, no change needed
