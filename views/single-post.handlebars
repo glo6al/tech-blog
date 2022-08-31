@@ -1,23 +1,4 @@
-{{!-- <div class="posts">
-  {{#each posts}}
-    <article class="card">
-      <div class="card-header flex-row justify-space-between">
-        <h2>
-          <a href="/posts/{{id}}">
-            {{title}}
-          </a>
-        </h2>
-        <div>
-          posted by
-          {{user.username}}
-        </div>
-      </div>
-      <div class="card-body">
-        {{post_body}}
-      </div>
-    </article>
-  {{/each}}
-</div> --}}
+{{> post-info post}}
 
 {{#if loggedIn}}
   <form class="new-comment-form" id="new-comment-form">
@@ -31,18 +12,7 @@
   </form>
 {{/if}}
 
-<div class="comments li-group">
-  {{#each this}}
-    <section class="comment list-item">
-      <div class="meta">
-        <h3> {{user.username}}</h3>
-      </div>
-      <div class="text">
-        {{comment_text}}
-      </div>
-    </section>
-  {{/each}}
-</div>
+{{> comments post.comments}}
 
 {{#if loggedIn}}
   <script src="/js/comment.js"></script>
