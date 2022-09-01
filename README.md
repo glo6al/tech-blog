@@ -1,5 +1,7 @@
 ## Repository URL: https://github.com/glo6al/tech-blog
 
+## Heroku URL: https://evening-ridge-07630.herokuapp.com/
+
 # Tech-Blog
 
 ## Table of Contents
